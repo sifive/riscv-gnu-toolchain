@@ -1,14 +1,15 @@
 [submodule "binutils"]
 	path = binutils
-	url = https://sourceware.org/git/binutils-gdb.git
-	branch = binutils-2_40-branch
+	url = git@github.com:sifive/riscv-binutils-gdb.git
+	branch = riscv-binutils-2.41-cfi
 [submodule "gcc"]
 	path = gcc
-	url = https://gcc.gnu.org/git/gcc.git
-	branch = releases/gcc-12
+	url = git@github.com:sifive/riscv-gcc.git
+	branch = riscv-gcc-13.2-cfi
 [submodule "glibc"]
 	path = glibc
-	url = https://sourceware.org/git/glibc.git
+	url = git@github.com:sifive/riscv-glibc.git
+	branch = riscv-glibc-2.38-cfi
 [submodule "dejagnu"]
 	path = dejagnu
 	url = https://git.savannah.gnu.org/git/dejagnu.git
@@ -23,7 +24,8 @@
 	branch = gdb-12-branch
 [submodule "qemu"]
 	path = qemu
-	url = https://gitlab.com/qemu-project/qemu.git
+	url = git@github.com:sifive/qemu.git
+	branch = riscv-qemu-8.1.0-cfi
 [submodule "musl"]
 	path = musl
 	url = https://git.musl-libc.org/git/musl
@@ -38,5 +40,5 @@
 	branch = master
 [submodule "llvm"]
 	path = llvm
-	url = https://github.com/llvm/llvm-project.git
-	branch = release/15.x
+	url = git@github.com:sifive/riscv-llvm.git
+	branch = riscv-llvm-17-cfi
