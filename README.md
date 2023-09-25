@@ -1,3 +1,28 @@
+# THIS IS CFI DEVELOPER BRANCH
+
+## Clone
+
+     $ git clone git@github.com:sifive/riscv-gnu-toolchain.git -b cfi-dev
+
+## Build
+     $ <riscv-gnu-toolchain>/configure --prefix=<prefix> --with-arch=rv64gc_zicfilp_zicfiss --enable-linux 
+     $ make
+     $ make build-qemu
+
+## How to compile
+
+Support static link only!!!
+
+     $ riscv64-unknown-linux-gnu-gcc -march=rv64gc_zicfilp_zicfiss ~/hello.c -static 
+
+## How to run
+
+     $ qemu-riscv64 -cpu rv64,zicfilp=true,zicfiss=true a.out
+
+Command for debug:
+
+     $ qemu-riscv64 -d in_asm -cpu rv64,zicfilp=true,zicfiss=true a.out
+
 RISC-V GNU Compiler Toolchain
 =============================
 
