@@ -5,7 +5,7 @@
      $ git clone git@github.com:sifive/riscv-gnu-toolchain.git -b cfi-dev
 
 ## Build
-     $ <riscv-gnu-toolchain>/configure --prefix=<prefix> --with-arch=rv64gc_zicfilp_zicfiss --enable-linux 
+     $ <riscv-gnu-toolchain>/configure --prefix=<prefix> --with-arch=rv64gc_zicfilp_zicfiss --enable-linux --disable-gdb
      $ make
      $ make build-qemu
 
