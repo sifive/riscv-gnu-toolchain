@@ -5,6 +5,20 @@
      $ git clone git@github.com:sifive/riscv-gnu-toolchain.git -b cfi-dev
 
 ## Build
+
+### Testing:
+
+Build C libray and run time with normal RV64GC configure, but able to complie program with -march=rv64gc_zicfilp_zicfiss
+
+     $ <riscv-gnu-toolchain>/configure --prefix=<prefix> --with-arch=rv64gc --enable-linux --disable-gdb
+     $ make
+     $ make build-qemu
+
+
+### Development:
+
+Build C libray and run time with CFI extensions, THIS IS NOT WORK YET, don't use this configuration unless you are developing the toolchain.
+
      $ <riscv-gnu-toolchain>/configure --prefix=<prefix> --with-arch=rv64gc_zicfilp_zicfiss --enable-linux --disable-gdb
      $ make
      $ make build-qemu
