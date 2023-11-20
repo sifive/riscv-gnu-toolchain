@@ -19,7 +19,7 @@ Build C libray and run time with normal RV64GC configure, but able to complie pr
 
 Build C libray and run time with CFI extensions, THIS IS NOT WORK YET, don't use this configuration unless you are developing the toolchain.
 
-     $ <riscv-gnu-toolchain>/configure --prefix=<prefix> --with-arch=rv64gc_zicfilp_zicfiss --enable-linux --disable-gdb
+     $ <riscv-gnu-toolchain>/configure --prefix=<prefix> --with-arch=rv64gc_zicfilp_zicfiss --enable-linux --disable-gdb  --with-extra-multilib-test="rv64gc_zicfilp_zicfiss-lp64d:-static"
      $ make
      $ make build-qemu
 
