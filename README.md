@@ -264,7 +264,7 @@ the following command can be used:
 
  RUNTESTFLAGS="riscv.exp" make report
 
-To to restrict a test run to only RISC-V specific tests with match the
+To restrict a test run to only RISC-V specific tests with match the
 pattern "zb*.c" and "sm*.c" the following command can be used:
 
  RUNTESTFLAGS="riscv.exp=zb*.c\ sm*.c" make report
@@ -284,6 +284,30 @@ The following command can be used to run the Binutils tests:
 The command below can be used to run the glibc tests:
 
     make check-glibc-linux
+
+##### Adding more arch/abi combination for testing without introducing multilib
+
+`--with-extra-multilib-test` can be used when you want to test more combination
+of arch/ABI, for example: built a linux toolchain with multilib with
+`rv64gc/lp64d` and `rv64imac/lp64`, but you want to test more configuration like
+`rv64gcv/lp64d` or `rv64gcv_zba/lp64d`, then you can use --with-extra-multilib-test
+to specify that via `--with-extra-multilib-test="rv64gcv-lp64d;rv64gcv_zba-lp64d"`,
+then the testing will run for `rv64gc/lp64d`, `rv64imac/lp64`, `rv64gcv/lp64d`
+and `rv64gcv_zba/lp64d`.
+
+`--with-extra-multilib-test` support bare-metal and linux toolchain and support
+even multilib is disable, but the user must ensure extra multilib test
+configuration can be work with existing lib/multilib, e.g. rv32gcv/ilp32 test
+can't work if multilib didn't have any rv32 multilib.
+
+`--with-extra-multilib-test` also allow you append additional build flags after
+the arch/ABI, for example: built a linux toolchain with `rv64gc/lp64d`, and you
+can test more configuration like `rv64gcv/lp64d` with one additional build config
+`--param=riscv-autovec-lmul=dynamic`, then you can use --with-extra-multilib-test
+to specify that via
+`--with-extra-multilib-test="rv64gcv-lp64d:--param=riscv-autovec-lmul=dynamic"`.
+Then the testing will build the run test with option `--param=riscv-autovec-lmul=dynamic`
+before run the `rv64gcv-lp64d` test.
 
 ### LLVM / clang
 

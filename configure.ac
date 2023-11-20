@@ -1,3 +1,4 @@
+## Process this file with autoconf 2.69. Other versions may not work.
 AC_INIT(riscv-toolchain, 1.0)
 
 AC_PROG_CC
@@ -47,8 +48,6 @@ AC_ARG_ENABLE(debug_info,
         )
 
 AS_IF([test "x$enable_debug_info" != xyes],
-        [AS_HELP_STRING([--disable-debug-info],
-		[build glibc and musl without debug infromation])],
         [disable_debug_info=yes],
         [disable_debug_info=no]
         )
@@ -124,10 +123,20 @@ AC_ARG_WITH(multilib-generator,
 	[with_multilib_generator=no]
 	)
 
+AC_ARG_WITH(extra-multilib-test,
+	[AS_HELP_STRING([--with-extra-multilib-test],
+		[Adding extra multi-libs configuration for testing, this can be use even --disable-multilib, but be aware user need to make sure those extra multilib set can work/compatible with existing multi-libs, format: <arch>-<abi>;<arch>-<abi>  e.g: --with-extra-multilib-test="rv64gcv-lp64;rv64gcv_zba-lp64"])],
+	[],
+	[with_extra_multilib_test=no]
+	)
+
 AS_IF([test "x$with_multilib_generator" != xno],
         [AC_SUBST(multilib_gen,"$with_multilib_generator")],
         [AC_SUBST(multilib_gen,"")])
 
+AS_IF([test "x$with_extra_multilib_test" != xno],
+        [AC_SUBST(extra_multilib_test,"$with_extra_multilib_test")],
+        [AC_SUBST(extra_multilib_test,"")])
 
 AS_IF([test "x$enable_multilib" != xno || test "x$with_multilib_generator" != xno],
         [AC_SUBST(multilib_flags,--enable-multilib)],

@@ -13,7 +13,7 @@
 [submodule "dejagnu"]
 	path = dejagnu
 	url = https://git.savannah.gnu.org/git/dejagnu.git
-	branch = dejagnu-1.6.3
+	branch = master
 [submodule "newlib"]
 	path = newlib
 	url = https://sourceware.org/git/newlib-cygwin.git
@@ -21,7 +21,7 @@
 [submodule "gdb"]
 	path = gdb
 	url = https://sourceware.org/git/binutils-gdb.git
-	branch = gdb-12-branch
+	branch = gdb-13-branch
 [submodule "qemu"]
 	path = qemu
 	url = git@github.com:sifive/qemu.git

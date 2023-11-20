@@ -23,7 +23,16 @@ jobs:
           - mode: musl
             compiler: llvm
     steps:
-      - uses: actions/checkout@v2
+      - name: Remove unneeded frameworks to recover disk space
+        run: |
+          echo "-- Before --"
+          df -h
+          sudo rm -rf /usr/share/dotnet
+          sudo rm -rf /usr/local/lib/android
+          echo "-- After --"
+          df -h
+
+      - uses: actions/checkout@v4
 
       - name: install dependencies
         run: sudo ./.github/setup-apt.sh
@@ -41,7 +50,7 @@ jobs:
 
       - name: make report
         if: |
-          matrix.os == 'ubuntu-20.04'
+          matrix.os == 'ubuntu-22.04'
           && (matrix.mode == 'linux' || matrix.mode == 'newlib')
           && matrix.compiler == 'gcc'
         run: |
@@ -68,9 +77,9 @@ jobs:
             *)
               MODE="elf";;
           esac
-          echo ::set-output name=TOOLCHAIN_NAME::riscv$BITS-$MODE-${{ matrix.os }}-${{ matrix.compiler }}-nightly
+          echo "TOOLCHAIN_NAME=riscv$BITS-$MODE-${{ matrix.os }}-${{ matrix.compiler }}-nightly" >> $GITHUB_OUTPUT
 
-      - uses: actions/upload-artifact@v2
+      - uses: actions/upload-artifact@v3
         with:
           name: ${{ steps.toolchain-name-generator.outputs.TOOLCHAIN_NAME }}
           path: riscv.tar.gz
@@ -79,15 +88,21 @@ jobs:
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
-        os:     [ubuntu-20.04]
-        mode:   [newlib, linux]
+        os:     [ubuntu-22.04]
+        mode:   [newlib]
         target: [rv64gc-lp64d]
         sim:    [spike]
-        exclude:
-          - sim: spike
-            mode: linux
     steps:
-      - uses: actions/checkout@v2
+      - name: Remove unneeded frameworks to recover disk space
+        run: |
+          echo "-- Before --"
+          df -h
+          sudo rm -rf /usr/share/dotnet
+          sudo rm -rf /usr/local/lib/android
+          echo "-- After --"
+          df -h
+
+      - uses: actions/checkout@v4
 
       - name: install dependencies
         run: sudo ./.github/setup-apt.sh
@@ -106,11 +121,20 @@ jobs:
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
-        os:     [ubuntu-20.04]
+        os:     [ubuntu-22.04]
         mode:   [newlib, linux]
         target: [rv64gc-lp64d]
     steps:
-      - uses: actions/checkout@v2
+      - name: Remove unneeded frameworks to recover disk space
+        run: |
+          echo "-- Before --"
+          df -h
+          sudo rm -rf /usr/share/dotnet
+          sudo rm -rf /usr/local/lib/android
+          echo "-- After --"
+          df -h
+
+      - uses: actions/checkout@v4
 
       - name: install dependencies
         run: sudo ./.github/setup-apt.sh
@@ -140,9 +164,9 @@ jobs:
             *)
               MODE="elf";;
           esac
-          echo ::set-output name=TOOLCHAIN_NAME::riscv$BITS-$MODE-${{ matrix.os }}-multilib-nightly
+          echo "TOOLCHAIN_NAME=riscv$BITS-$MODE-${{ matrix.os }}-multilib-nightly" >> $GITHUB_OUTPUT
 
-      - uses: actions/upload-artifact@v2
+      - uses: actions/upload-artifact@v3
         with:
           name: ${{ steps.toolchain-name-generator.outputs.TOOLCHAIN_NAME }}
           path: riscv.tar.gz

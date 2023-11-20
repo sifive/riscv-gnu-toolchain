@@ -34,8 +34,8 @@ jobs:
                 STALE=true
               fi
           fi
-          echo "::set-output name=stale::$STALE"
-          
+          echo "stale=$STALE" >> $GITHUB_OUTPUT
+
           if [ "$STALE" == "true" ]; then
             exit 1
           fi
@@ -58,7 +58,16 @@ jobs:
           - mode: musl
             compiler: llvm
     steps:
-      - uses: actions/checkout@v2
+      - name: Remove unneeded frameworks to recover disk space
+        run: |
+          echo "-- Before --"
+          df -h
+          sudo rm -rf /usr/share/dotnet
+          sudo rm -rf /usr/local/lib/android
+          echo "-- After --"
+          df -h
+
+      - uses: actions/checkout@v4
 
       - name: install apt dependencies
         run: sudo ./.github/setup-apt.sh
@@ -100,9 +109,9 @@ jobs:
             *)
               MODE="elf";;
           esac
-          echo ::set-output name=TOOLCHAIN_NAME::riscv$BITS-$MODE-${{ matrix.os }}-${{ matrix.compiler }}-nightly
+          echo "TOOLCHAIN_NAME=riscv$BITS-$MODE-${{ matrix.os }}-${{ matrix.compiler }}-nightly" >> $GITHUB_OUTPUT
 
-      - uses: actions/upload-artifact@v2
+      - uses: actions/upload-artifact@v3
         with:
           name: ${{ steps.toolchain-name-generator.outputs.TOOLCHAIN_NAME }}
           path: riscv.tar.gz
@@ -172,11 +181,11 @@ jobs:
                   file: .[1],
                   extension: .[2]
                 }
-              ] 
+              ]
             }'
           )
 
-          echo "::set-output name=asset_matrix::${ASSET_MATRIX}"
+          echo "asset_matrix=${ASSET_MATRIX}" >> $GITHUB_OUTPUT
         shell: bash
 
 

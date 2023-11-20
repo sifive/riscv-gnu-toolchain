@@ -1,10 +1,25 @@
 #
 # XXX: Need review why.
 #
-FAIL: c-c++-common/goacc/kernels-decompose-pr100400-1-2.c
-XPASS: c-c++-common/goacc/kernels-decompose-pr100400-1-2.c
+FAIL: gfortran.dg/matmul_15.f90
+FAIL: gfortran.dg/ieee/ieee_1.F90
+FAIL: gfortran.dg/ieee/ieee_2.f90
 FAIL: gfortran.dg/ieee/ieee_6.f90
+FAIL: gfortran.dg/ieee/large_2.f90
+FAIL: gfortran.dg/ieee/large_3.F90
+FAIL: gfortran.dg/ieee/modes_1.f90
+FAIL: gfortran.dg/ieee/rounding_1.f90
+#
+# Fails if there is no F extension
+#
+FAIL: gfortran.dg/ieee/rounding_3.f90
 #
 # Synchronization problem.
 #
 FAIL: gcc.dg/tree-prof/time-profiler-2.c
+#
+# Fix upstream
+# https://gcc.gnu.org/git/?p=gcc.git;a=commit;h=c9a19621a07e246385ae075b61283140b23c3b5a
+#
+FAIL: gcc.dg/analyzer/data-model-4.c
+FAIL: gcc.dg/analyzer/torture/conftest-1.c
