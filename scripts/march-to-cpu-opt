@@ -20,8 +20,8 @@ EXT_OPTS = {
   "zhinx":           "zhinx=true",
   "zfinx":           "zfinx=true",
   "zdinx":           "zdinx=true",
-  "zicfilp":         "zicfiss=true",
-  "zicfiss":         "zicfilp=true",
+  "zicfilp":         "zicfilp=true",
+  "zicfiss":         "zicfiss=true",
 }
 
 SUPPORTTED_EXTS = "iemafdcbvph"
