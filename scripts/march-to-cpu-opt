@@ -136,14 +136,20 @@ def conver_arch_to_qemu_cpu_opt(march):
         cpu_opt.append("vlen=%d" % vlen)
 
     disable_all_fd = False
+    require_zcmop = False
     for ext in ext_dict.keys():
         if ext in EXT_OPTS:
             cpu_opt.append(EXT_OPTS[ext])
         if ext in ['zhinx', 'zfinx', 'zdinx']:
             disable_all_fd = True
+        if ext in ['zicfiss', 'zicfilp']:
+            require_zcmop = True
     if disable_all_fd:
         cpu_opt.append("f=false")
         cpu_opt.append("d=false")
+    if require_zcmop:
+        cpu_opt.append("zimop=true")
+        cpu_opt.append("zcmop=true")
     return ",".join(cpu_opt)
 
 
