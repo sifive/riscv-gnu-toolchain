@@ -344,6 +344,7 @@ stamps/build-binutils-linux: $(BINUTILS_SRCDIR) $(BINUTILS_SRC_GIT) stamps/check
 		$(BINUTILS_TARGET_FLAGS) \
 		--disable-gdb \
 		--disable-sim \
+		--disable-gprofng \
 		--disable-libdecnumber \
 		--disable-readline \
 		$(WITH_ISA_SPEC)
