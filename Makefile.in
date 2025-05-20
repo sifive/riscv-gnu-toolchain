@@ -344,6 +344,7 @@ stamps/build-binutils-linux: $(BINUTILS_SRCDIR) $(BINUTILS_SRC_GIT) stamps/check
 		--disable-nls \
 		$(BINUTILS_TARGET_FLAGS) \
 		--disable-gdb \
+		--disable-gprofng \
 		--disable-sim \
 		--disable-gprofng \
 		--disable-libdecnumber \
@@ -516,6 +517,7 @@ stamps/build-binutils-linux-native: $(BINUTILS_SRCDIR) $(BINUTILS_SRC_GIT) stamp
 		--disable-nls \
 		$(BINUTILS_NATIVE_FLAGS) \
 		--disable-gdb \
+		--disable-gprofng \
 		--disable-sim \
 		--disable-libdecnumber \
 		--disable-readline \
@@ -572,6 +574,7 @@ stamps/build-binutils-newlib: $(BINUTILS_SRCDIR) $(BINUTILS_SRC_GIT) stamps/chec
 		--disable-werror \
 		$(BINUTILS_TARGET_FLAGS) \
 		--disable-gdb \
+		--disable-gprofng \
 		--disable-sim \
 		--disable-libdecnumber \
 		--disable-readline \
@@ -763,6 +766,7 @@ stamps/build-binutils-musl: $(BINUTILS_SRCDIR) $(BINUTILS_SRC_GIT) stamps/check-
 		--disable-nls \
 		$(BINUTILS_TARGET_FLAGS) \
 		--disable-gdb \
+		--disable-gprofng \
 		--disable-sim \
 		--disable-libdecnumber \
 		--disable-readline \
