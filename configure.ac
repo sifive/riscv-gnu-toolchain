@@ -84,6 +84,14 @@ AC_ARG_WITH(isa-spec,
 	[with_isa_spec=20191213]
 	)
 
+AC_ARG_WITH(label-scheme,
+	[AS_HELP_STRING([--with-label-scheme=unlabeled],
+		[Set the default label scheme, default to unlabeled, available options: unlabeled, func-sig, default])],
+	[],
+	[with_label_scheme=unlabeled]
+	)
+
+
 AC_ARG_WITH(sim,
 	[AS_HELP_STRING([--with-sim=qemu],
 		[Sets the base RISC-V Simulator, defaults to qemu])],
@@ -107,6 +115,7 @@ AC_SUBST(WITH_ARCH, --with-arch=$with_arch)
 AC_SUBST(WITH_ABI, --with-abi=$with_abi)
 AC_SUBST(WITH_TUNE, --with-tune=$with_tune)
 AC_SUBST(WITH_ISA_SPEC, --with-isa-spec=$with_isa_spec)
+AC_SUBST(WITH_LABEL_SCHEME, --with-label-scheme=$with_label_scheme)
 AC_SUBST(WITH_SIM, $with_sim)
 
 AC_ARG_ENABLE(multilib,

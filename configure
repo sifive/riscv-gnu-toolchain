@@ -614,6 +614,7 @@ multilib_flags
 extra_multilib_test
 multilib_gen
 WITH_SIM
+WITH_LABEL_SCHEME
 WITH_ISA_SPEC
 WITH_TUNE
 WITH_ABI
@@ -683,6 +684,7 @@ with_arch
 with_abi
 with_tune
 with_isa_spec
+with_label_scheme
 with_sim
 enable_multilib
 with_multilib_generator
@@ -1351,6 +1353,9 @@ Optional Packages:
   --with-isa-spec=20191213
                           Set the default ISA spec version, default to
                           20191213, available options: 2.2, 20190608, 20191213
+  --with-label-scheme=unlabeled
+                          Set the default label scheme, default to unlabeled,
+                          available options: unlabeled, func-sig, default
   --with-sim=qemu         Sets the base RISC-V Simulator, defaults to qemu
   --with-multilib-generator
                           Multi-libs configuration string, only supported for
@@ -3170,6 +3175,17 @@ fi
 
 
 
+# Check whether --with-label-scheme was given.
+if test "${with_label_scheme+set}" = set; then :
+  withval=$with_label_scheme;
+else
+  with_label_scheme=unlabeled
+
+fi
+
+
+
+
 # Check whether --with-sim was given.
 if test "${with_sim+set}" = set; then :
   withval=$with_sim;
@@ -3208,6 +3224,8 @@ WITH_ABI=--with-abi=$with_abi
 WITH_TUNE=--with-tune=$with_tune
 
 WITH_ISA_SPEC=--with-isa-spec=$with_isa_spec
+
+WITH_LABEL_SCHEME=--with-label-scheme=$with_label_scheme
 
 WITH_SIM=$with_sim
 
