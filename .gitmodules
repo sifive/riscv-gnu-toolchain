@@ -1,15 +1,15 @@
 [submodule "binutils"]
 	path = binutils
 	url = git@github.com:sifive/riscv-binutils-gdb.git
-	branch = riscv-binutils-2.41-cfi
+	branch = kitoc/upstream-cfi-wip
 [submodule "gcc"]
 	path = gcc
 	url = git@github.com:sifive/riscv-gcc.git
-	branch = riscv-gcc-13.2-cfi
+	branch = func-sig-dev
 [submodule "glibc"]
 	path = glibc
 	url = git@github.com:sifive/riscv-glibc.git
-	branch = riscv-glibc-2.38-cfi
+	branch = riscv-glibc-2.39-cfi
 [submodule "dejagnu"]
 	path = dejagnu
 	url = https://git.savannah.gnu.org/git/dejagnu.git
