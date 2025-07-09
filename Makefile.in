@@ -85,6 +85,9 @@ MUSL_TUPLE ?= $(call make_tuple,$(XLEN),linux-musl)
 CFLAGS_FOR_TARGET := $(CFLAGS_FOR_TARGET_EXTRA) -fcf-protection=full $(DEBUG_INFO) @target_cflags@ @cmodel@
 CXXFLAGS_FOR_TARGET := $(CXXFLAGS_FOR_TARGET_EXTRA) -fcf-protection=full $(DEBUG_INFO) @target_cxxflags@ @cmodel@
 ASFLAGS_FOR_TARGET := $(ASFLAGS_FOR_TARGET_EXTRA) -fcf-protection=full $(DEBUG_INFO) @cmodel@
+CFLAGS_FOR_TARGET_GLIBC := $(CFLAGS_FOR_TARGET_EXTRA) $(DEBUG_INFO) @target_cflags@ @cmodel@
+CXXFLAGS_FOR_TARGET_GLIBC := $(CXXFLAGS_FOR_TARGET_EXTRA) $(DEBUG_INFO) @target_cxxflags@ @cmodel@
+ASFLAGS_FOR_TARGET_GLIBC := $(ASFLAGS_FOR_TARGET_EXTRA) $(DEBUG_INFO) @cmodel@
 # --with-expat is required to enable XML support used by OpenOCD.
 BINUTILS_TARGET_FLAGS := --with-expat=yes $(BINUTILS_TARGET_FLAGS_EXTRA)
 BINUTILS_NATIVE_FLAGS := $(BINUTILS_NATIVE_FLAGS_EXTRA)
@@ -373,7 +376,9 @@ stamps/build-gdb-linux: $(GDB_SRCDIR) $(GDB_SRC_GIT)
 		--disable-binutils \
 		--disable-ld \
 		--disable-gold \
-		--disable-gprof
+		--disable-gprof \
+		--with-python=/sifive/tools/python/python/rhel8/3.11.3/bin/python3 \
+        LDFLAGS="-Wl,-rpath,/sifive/tools/python/python/rhel8/3.11.3/lib -L/sifive/tools/python/python/rhel8/3.11.3/lib"
 	$(MAKE) -C $(notdir $@)
 	$(MAKE) -C $(notdir $@) install
 	mkdir -p $(dir $@) && touch $@
@@ -406,16 +411,17 @@ endif
 	rm -rf $@ $(notdir $@)
 	mkdir $(notdir $@)
 	cd $(notdir $@) && \
-		CC="$(GLIBC_CC_FOR_TARGET) $($@_CFLAGS) -fcf-protection=full" \
+		CC="$(GLIBC_CC_FOR_TARGET) $($@_CFLAGS)" \
 		CXX="this-is-not-the-compiler-youre-looking-for" \
-		CFLAGS="$(CFLAGS_FOR_TARGET) -O2 $($@_CFLAGS)" \
-		CXXFLAGS="$(CXXFLAGS_FOR_TARGET) -O2 $($@_CFLAGS)" \
-		ASFLAGS="$(ASFLAGS_FOR_TARGET) $($@_CFLAGS) -fcf-protection=full" \
+		CFLAGS="$(CFLAGS_FOR_TARGET_GLIBC) -O2 $($@_CFLAGS)" \
+		CXXFLAGS="$(CXXFLAGS_FOR_TARGET_GLIBC) -O2 $($@_CFLAGS)" \
+		ASFLAGS="$(ASFLAGS_FOR_TARGET_GLIBC) $($@_CFLAGS)" \
 		$</configure \
 		--host=$(call make_tuple,$($@_XLEN),linux-gnu) \
 		--prefix=/usr \
 		--disable-werror \
 		--enable-shared \
+		--enable-cfi \
 		--enable-obsolete-rpc \
 		--with-headers=$(LINUX_HEADERS_SRCDIR) \
 		$(MULTILIB_FLAGS) \
