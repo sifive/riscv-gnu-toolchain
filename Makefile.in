@@ -406,11 +406,11 @@ endif
 	rm -rf $@ $(notdir $@)
 	mkdir $(notdir $@)
 	cd $(notdir $@) && \
-		CC="$(GLIBC_CC_FOR_TARGET) $($@_CFLAGS) -fcf-protection=full" \
+		CC="$(GLIBC_CC_FOR_TARGET) $($@_CFLAGS)" \
 		CXX="this-is-not-the-compiler-youre-looking-for" \
 		CFLAGS="$(CFLAGS_FOR_TARGET) -O2 $($@_CFLAGS)" \
 		CXXFLAGS="$(CXXFLAGS_FOR_TARGET) -O2 $($@_CFLAGS)" \
-		ASFLAGS="$(ASFLAGS_FOR_TARGET) $($@_CFLAGS) -fcf-protection=full" \
+		ASFLAGS="$(ASFLAGS_FOR_TARGET) $($@_CFLAGS)" \
 		$</configure \
 		--host=$(call make_tuple,$($@_XLEN),linux-gnu) \
 		--prefix=/usr \
