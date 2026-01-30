@@ -305,6 +305,19 @@ AS_IF([test "x$enable_libsanitizer" != xno],
 	[AC_SUBST(enable_libsanitizer, --enable-libsanitizer)],
 	[AC_SUBST(enable_libsanitizer, --disable-libsanitizer)])
 
+AC_ARG_ENABLE(cfi,
+	[AS_HELP_STRING([--enable-cfi],
+		[Enable Control Flow Integrity protection @<:@--disable-cfi@:>@])],
+	[],
+	[enable_cfi=no]
+	)
+
+AS_IF([test "x$enable_cfi" != xno],
+	[AC_SUBST(cfi_flags, -fcf-protection=full)
+	 AC_SUBST(glibc_cfi_flags, --enable-cfi)],
+	[AC_SUBST(cfi_flags, "")
+	 AC_SUBST(glibc_cfi_flags, "")])
+
 AC_ARG_ENABLE(qemu_system,
 	[AS_HELP_STRING([--enable-qemu-system],
 		[Build qemu with system-mode emulation])],

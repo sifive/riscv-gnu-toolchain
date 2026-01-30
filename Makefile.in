@@ -82,16 +82,20 @@ LINUX_TUPLE  ?= $(call make_tuple,$(XLEN),linux-gnu)
 NEWLIB_TUPLE ?= $(call make_tuple,$(XLEN),elf)
 MUSL_TUPLE ?= $(call make_tuple,$(XLEN),linux-musl)
 
-CFLAGS_FOR_TARGET := $(CFLAGS_FOR_TARGET_EXTRA) -fcf-protection=full $(DEBUG_INFO) @target_cflags@ @cmodel@
-CXXFLAGS_FOR_TARGET := $(CXXFLAGS_FOR_TARGET_EXTRA) -fcf-protection=full $(DEBUG_INFO) @target_cxxflags@ @cmodel@
-ASFLAGS_FOR_TARGET := $(ASFLAGS_FOR_TARGET_EXTRA) -fcf-protection=full $(DEBUG_INFO) @cmodel@
+CFLAGS_FOR_TARGET := $(CFLAGS_FOR_TARGET_EXTRA) @cfi_flags@ $(DEBUG_INFO) @target_cflags@ @cmodel@
+CXXFLAGS_FOR_TARGET := $(CXXFLAGS_FOR_TARGET_EXTRA) @cfi_flags@ $(DEBUG_INFO) @target_cxxflags@ @cmodel@
+ASFLAGS_FOR_TARGET := $(ASFLAGS_FOR_TARGET_EXTRA) @cfi_flags@ $(DEBUG_INFO) @cmodel@
+# For glibc, use configure flag instead of compiler flags for CFI
+GLIBC_CFLAGS_FOR_TARGET := $(CFLAGS_FOR_TARGET_EXTRA) $(DEBUG_INFO) @target_cflags@ @cmodel@
+GLIBC_CXXFLAGS_FOR_TARGET := $(CXXFLAGS_FOR_TARGET_EXTRA) $(DEBUG_INFO) @target_cxxflags@ @cmodel@
+GLIBC_ASFLAGS_FOR_TARGET := $(ASFLAGS_FOR_TARGET_EXTRA) $(DEBUG_INFO) @cmodel@
 # --with-expat is required to enable XML support used by OpenOCD.
 BINUTILS_TARGET_FLAGS := --with-expat=yes $(BINUTILS_TARGET_FLAGS_EXTRA)
 BINUTILS_NATIVE_FLAGS := $(BINUTILS_NATIVE_FLAGS_EXTRA)
 GDB_TARGET_FLAGS := --with-expat=yes $(GDB_TARGET_FLAGS_EXTRA)
 GDB_NATIVE_FLAGS := $(GDB_NATIVE_FLAGS_EXTRA)
 
-GLIBC_TARGET_FLAGS := $(GLIBC_TARGET_FLAGS_EXTRA)
+GLIBC_TARGET_FLAGS := @glibc_cfi_flags@ $(GLIBC_TARGET_FLAGS_EXTRA)
 GLIBC_CC_FOR_TARGET ?= $(LINUX_TUPLE)-gcc
 GLIBC_CXX_FOR_TARGET ?= $(LINUX_TUPLE)-g++
 GLIBC_TARGET_BOARDS ?= $(shell $(srcdir)/scripts/generate_target_board \
@@ -408,9 +412,9 @@ endif
 	cd $(notdir $@) && \
 		CC="$(GLIBC_CC_FOR_TARGET) $($@_CFLAGS)" \
 		CXX="this-is-not-the-compiler-youre-looking-for" \
-		CFLAGS="$(CFLAGS_FOR_TARGET) -O2 $($@_CFLAGS)" \
-		CXXFLAGS="$(CXXFLAGS_FOR_TARGET) -O2 $($@_CFLAGS)" \
-		ASFLAGS="$(ASFLAGS_FOR_TARGET) $($@_CFLAGS)" \
+		CFLAGS="$(GLIBC_CFLAGS_FOR_TARGET) -O2 $($@_CFLAGS)" \
+		CXXFLAGS="$(GLIBC_CXXFLAGS_FOR_TARGET) -O2 $($@_CFLAGS)" \
+		ASFLAGS="$(GLIBC_ASFLAGS_FOR_TARGET) $($@_CFLAGS)" \
 		$</configure \
 		--host=$(call make_tuple,$($@_XLEN),linux-gnu) \
 		--prefix=/usr \
