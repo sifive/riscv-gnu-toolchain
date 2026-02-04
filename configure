@@ -585,6 +585,8 @@ PACKAGE_URL=''
 ac_subst_vars='LTLIBOBJS
 LIBOBJS
 qemu_targets
+glibc_cfi_flags
+cfi_flags
 enable_libsanitizer
 with_linux_headers_src
 with_dejagnu_src
@@ -711,6 +713,7 @@ with_llvm_src
 with_dejagnu_src
 with_linux_headers_src
 enable_libsanitizer
+enable_cfi
 enable_qemu_system
 '
       ac_precious_vars='build_alias
@@ -1342,6 +1345,8 @@ Optional Features:
   --disable-gdb           Don't build GDB, as it's not upstream
   --enable-llvm           Build LLVM (clang)
   --enable-libsanitizer   Build libsanitizer, which only supports rv64
+  --enable-cfi            Enable Control Flow Integrity protection
+                          [--disable-cfi]
   --enable-qemu-system    Build qemu with system-mode emulation
 
 Optional Packages:
@@ -3687,6 +3692,27 @@ if test "x$enable_libsanitizer" != xno; then :
 
 else
   enable_libsanitizer=--disable-libsanitizer
+
+fi
+
+# Check whether --enable-cfi was given.
+if test "${enable_cfi+set}" = set; then :
+  enableval=$enable_cfi;
+else
+  enable_cfi=no
+
+fi
+
+
+if test "x$enable_cfi" != xno; then :
+  cfi_flags=-fcf-protection=full
+
+	 glibc_cfi_flags=--enable-cfi
+
+else
+  cfi_flags=""
+
+	 glibc_cfi_flags=""
 
 fi
 
