@@ -1,15 +1,15 @@
 [submodule "binutils"]
 	path = binutils
-	url = git@github.com:sifive/riscv-binutils-gdb.git
-	branch = kitoc/upstream-cfi-wip
+	url = git@github.com:sifive/riscv-binutils-gdb-internal.git
+	branch = sifive-dev
 [submodule "gcc"]
 	path = gcc
-	url = git@github.com:sifive/riscv-gcc.git
-	branch = func-sig-dev
+	url = git@github.com:sifive/riscv-gcc-internal.git
+	branch = sifive-dev
 [submodule "glibc"]
 	path = glibc
-	url = git@github.com:sifive/riscv-glibc.git
-	branch = riscv-glibc-2.39-cfi
+	url = git@github.com:sifive/riscv-glibc-private.git
+	branch = sifive-dev
 [submodule "dejagnu"]
 	path = dejagnu
 	url = https://git.savannah.gnu.org/git/dejagnu.git
@@ -20,8 +20,8 @@
 	branch = master
 [submodule "gdb"]
 	path = gdb
-	url = https://sourceware.org/git/binutils-gdb.git
-	branch = gdb-13-branch
+	url = git@github.com:sifive/riscv-binutils-gdb-internal.git
+	branch = sifive-dev
 [submodule "qemu"]
 	path = qemu
 	url = git@github.com:sifive/qemu.git
