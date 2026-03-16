@@ -5,7 +5,7 @@
 [submodule "gcc"]
 	path = gcc
 	url = git@github.com:sifive/riscv-gcc-internal.git
-	branch = sifive-dev
+	branch = split-lpad-info-fixes
 [submodule "glibc"]
 	path = glibc
 	url = git@github.com:sifive/riscv-glibc-private.git
