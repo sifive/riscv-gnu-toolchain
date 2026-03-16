@@ -1,7 +1,7 @@
 [submodule "binutils"]
 	path = binutils
 	url = git@github.com:sifive/riscv-binutils-gdb-internal.git
-	branch = sifive-dev
+	branch = binutils-lpadinfo-clean
 [submodule "gcc"]
 	path = gcc
 	url = git@github.com:sifive/riscv-gcc-internal.git
@@ -9,7 +9,7 @@
 [submodule "glibc"]
 	path = glibc
 	url = git@github.com:sifive/riscv-glibc-private.git
-	branch = sifive-dev
+	branch = glibc-func-sig-clean
 [submodule "dejagnu"]
 	path = dejagnu
 	url = https://git.savannah.gnu.org/git/dejagnu.git
