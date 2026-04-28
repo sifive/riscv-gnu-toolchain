@@ -359,6 +359,8 @@ stamps/build-binutils-linux: $(BINUTILS_SRCDIR) $(BINUTILS_SRC_GIT) stamps/check
 	mkdir -p $(dir $@) && touch $@
 
 stamps/build-gdb-linux: $(GDB_SRCDIR) $(GDB_SRC_GIT)
+	ln -sfn $(GCC_SRCDIR)/gmp $(GDB_SRCDIR)/gmp
+	ln -sfn $(GCC_SRCDIR)/mpfr $(GDB_SRCDIR)/mpfr
 	rm -rf $@ $(notdir $@)
 	mkdir $(notdir $@)
 # CC_FOR_TARGET is required for the ld testsuite.
@@ -377,7 +379,9 @@ stamps/build-gdb-linux: $(GDB_SRCDIR) $(GDB_SRC_GIT)
 		--disable-binutils \
 		--disable-ld \
 		--disable-gold \
-		--disable-gprof
+		--disable-gprof \
+		--with-python=/sifive/tools/python/python/rhel8/3.14.2/bin/python3 \
+		LDFLAGS="-Wl,-rpath,/sifive/tools/python/python/rhel8/3.14.2/lib -L/sifive/tools/python/python/rhel8/3.14.2/lib"
 	$(MAKE) -C $(notdir $@)
 	$(MAKE) -C $(notdir $@) install
 	mkdir -p $(dir $@) && touch $@
@@ -934,7 +938,8 @@ stamps/build-qemu: $(QEMU_SRCDIR) $(QEMU_SRC_GIT)
 		--prefix=$(INSTALL_DIR) \
 		--target-list=$(QEMU_TARGETS) \
 		--interp-prefix=$(INSTALL_DIR)/sysroot \
-		--python=python3
+		--python=python3 \
+		--extra-ldflags="-Wl,-rpath,/nfs/teams/sw/share/swqa/jenkins/tarball/glib-2.68.4/install/lib64"
 	$(MAKE) -C $(notdir $@)
 	$(MAKE) -C $(notdir $@) install
 	mkdir -p $(dir $@)
